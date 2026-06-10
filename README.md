@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo_band.png" alt="Band Risk-Review" width="220">
+</p>
+
 # Band Risk-Review
 
 **A multi-agent compliance workflow for high-stakes financial decisions — four specialized agents collaborating through Band.**
