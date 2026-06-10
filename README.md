@@ -39,9 +39,31 @@ The demo shows the full range of honest behaviour:
 | Add DOGE? | **ABSTAIN** | no data on the asset |
 | Add SOL? | **ESCALATE** | drawdown contribution 9% of NAV > 6% gate → human review |
 
-## Architecture seam (how Band plugs in)
+## Live on Band (verified ✅)
 
-The agents depend only on the `Bus` protocol in `band_bus.py`. `LocalBandBus` is an in-memory stand-in for a Band room so the whole workflow runs offline today. At the June 12 kickoff, swap in a thin `RealBandBus` adapter over the Band SDK **without touching any agent logic**. See `band_wiring_prompt.md` for the exact build prompt.
+This is **not** just a mock — the four agents have been run live as Band Remote
+Agents, collaborating through a real Band room and powered by **Gemini**:
+
+```
+python band_agents.py data         # 4 processes (see SETUP_BAND.md for creds)
+python band_agents.py quant
+python band_agents.py calibration
+python band_agents.py reviewer
+# then in a Band room with all four added:  @Risk-Data Should I add to my BTC position?
+python post_question.py "Should I add to my BTC position?"   # or drive it headlessly
+python read_transcript.py reviewer                            # print the room's audit trail
+```
+
+Each agent (`band_agents.py`) is a custom Band `SimpleAdapter`: it calls **Gemini**
+for intent parsing + narration and the deterministic **`risk_tools.py`** for every
+number (the LLM never invents a risk figure). The handoff
+`Data → Quant → Calibration → Reviewer → user` happens entirely through the shared
+Band room via @mentions — that agent-to-agent collaboration is the judged feature.
+A verified run of all four scenarios (APPROVED / ABSTAIN×2 / ESCALATE) is in
+[`DEMO_TRANSCRIPT.md`](DEMO_TRANSCRIPT.md).
+
+The offline `LocalBandBus` in `band_bus.py` remains as the credential-free test
+double (`run_demo.py` / `test_workflow.py`).
 
 ## Files
 
@@ -54,6 +76,14 @@ The agents depend only on the `Bus` protocol in `band_bus.py`. `LocalBandBus` is
 - `run_demo.py` — orchestrates the four scenarios
 - `test_workflow.py` — tests (math + workflow), 16/16
 
-**Going live on Band (run on your machine — see `SETUP_BAND.md`):**
+**Live on Band (Gemini-powered — see `SETUP_BAND.md`):**
 
-- `risk_tools.py` — the deterministic c
+- `risk_tools.py` — the deterministic core exposed as agent tools
+- `band_agents.py` — the four agents as Band Remote Agents (Gemini + @mention handoff)
+- `post_question.py` — headlessly post a question into the room (drives the demo)
+- `read_transcript.py` — print the room's audit trail
+- `agent_config.example.yaml`, `.env.example` — config templates (gitignored when filled)
+- `SETUP_BAND.md` — step-by-step to stand up the four agents
+- `DEMO_TRANSCRIPT.md` — a verified live run of all four scenarios
+
+Built by **Ruiyang Zhang** (passed all three CFA Program exams). MIT.
