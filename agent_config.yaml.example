@@ -1,0 +1,26 @@
+# Copy to agent_config.yaml and fill in. agent_config.yaml is gitignored.
+#
+# One entry per Band Remote Agent. Create the four agents at https://app.band.ai
+# (Data, Risk, Calibration, Reviewer), then paste each agent's API key + UUID.
+# RealBandBus / the registration step read this file.
+
+agents:
+  data:
+    name: "Data Agent"
+    api_key: "REPLACE_WITH_DATA_AGENT_API_KEY"
+    uuid: "REPLACE_WITH_DATA_AGENT_UUID"
+  risk:
+    name: "Risk Agent"
+    api_key: "REPLACE_WITH_RISK_AGENT_API_KEY"
+    uuid: "REPLACE_WITH_RISK_AGENT_UUID"
+  calibration:
+    name: "Calibration Agent"
+    api_key: "REPLACE_WITH_CALIBRATION_AGENT_API_KEY"
+    uuid: "REPLACE_WITH_CALIBRATION_AGENT_UUID"
+  reviewer:
+    name: "Reviewer Agent"
+    api_key: "REPLACE_WITH_REVIEWER_AGENT_API_KEY"
+    uuid: "REPLACE_WITH_REVIEWER_AGENT_UUID"
+
+# Handoff order enforced by the workflow: data -> risk -> calibration -> reviewer
+handoff_order: [data, risk, calibration, reviewer]

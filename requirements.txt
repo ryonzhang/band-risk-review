@@ -1,0 +1,9 @@
+# Offline scaffold (run_demo.py, test_workflow.py) needs nothing but stdlib.
+
+# Real-build prep:
+pymongo>=4.6          # seed_atlas.py -> MongoDB Atlas
+python-dotenv>=1.0    # load .env
+pyyaml>=6.0           # parse agent_config.yaml
+
+# Added at the June 12 kickoff (pick one extra per the README):
+#   band-sdk[anthropic]   (or [claude-sdk] / [google-adk])
