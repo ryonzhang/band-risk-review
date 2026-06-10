@@ -28,7 +28,7 @@ fig,ax=plt.subplots(figsize=(6,6),dpi=110); fig.patch.set_facecolor(BG); ax.set_
 ax.set_xlim(0,100); ax.set_ylim(0,100); ax.axis("off")
 ring_of_agents(ax,50,56,30,11,["D","R","C","Rv"],lw=2.6,fs=13)
 ax.text(50,11,"BAND RISK-REVIEW",ha="center",color=TXT,fontsize=12.5,fontweight="bold")
-plt.savefig("logo_band.png",facecolor=BG,bbox_inches="tight",pad_inches=0.3)
+plt.savefig("_ignore_logo.png",facecolor=BG,bbox_inches="tight",pad_inches=0.3)
 plt.close()
 
 # ---------- COVER (1200x630 OG ratio) ----------
@@ -43,7 +43,7 @@ ax.text(7,37,"high-stakes financial decisions — with calibration,",color=TXT,f
 ax.text(7,32.5,"separation of duties, and an audit trail.",color=TXT,fontsize=13)
 ax.text(7,22.5,"Data  →  Risk  →  Calibration  →  Reviewer",color=MUT,fontsize=12.5,style="italic")
 ax.text(7,10,"Band of Agents Hackathon · Track 3 — Regulated & High-Stakes",color=MUT,fontsize=10.5)
-ax.text(7,5.5,"CFA/ASA-built · MIT · github.com/ryonzhang/band-risk-review",color=MUT,fontsize=9.5)
+ax.text(7,5.5,"MIT · github.com/ryonzhang/band-risk-review",color=MUT,fontsize=9.5)
 # right: motif
 ring_of_agents(ax,95,33,17,6.4,["D","R","C","Rv"],lw=2.2,fs=10)
 plt.savefig("cover_band.png",facecolor=BG,bbox_inches="tight",pad_inches=0.0)

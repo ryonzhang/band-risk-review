@@ -1,0 +1,15 @@
+# Copy to agent_config.yaml and fill in the API key + UUID for EACH of the four
+# External Agents you create in Band (https://app.band.ai/agents).
+# The block name (data/quant/calibration/reviewer) is what band_agents.py loads.
+data:
+  agent_id: "<risk-data-agent-uuid>"
+  api_key:  "<risk-data-agent-api-key>"
+quant:
+  agent_id: "<risk-quant-agent-uuid>"
+  api_key:  "<risk-quant-agent-api-key>"
+calibration:
+  agent_id: "<risk-calibration-agent-uuid>"
+  api_key:  "<risk-calibration-agent-api-key>"
+reviewer:
+  agent_id: "<risk-reviewer-agent-uuid>"
+  api_key:  "<risk-reviewer-agent-api-key>"

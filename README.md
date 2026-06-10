@@ -1,12 +1,8 @@
-<p align="center">
-  <img src="logo_band.png" alt="Band Risk-Review" width="220">
-</p>
-
 # Band Risk-Review
 
 **A multi-agent compliance workflow for high-stakes financial decisions — four specialized agents collaborating through Band.**
 
-Submission for the **Band of Agents Hackathon** (lablab.ai), **Track 3 — Regulated & High-Stakes workflows**. Built by Ruiyang Zhang (CFA, ASA). MIT.
+Submission for the **Band of Agents Hackathon** (lablab.ai), **Track 3 — Regulated & High-Stakes workflows**. Built by Ruiyang Zhang (passed all three CFA Program exams). MIT.
 
 ![architecture](architecture_band.png)
 
@@ -45,41 +41,19 @@ The demo shows the full range of honest behaviour:
 
 ## Architecture seam (how Band plugs in)
 
-The agents depend only on the `Bus` protocol in `band_bus.py` (`post`, `history`, `latest`). `LocalBandBus` is an in-memory stand-in for a Band room so the whole workflow runs offline today. A `RealBandBus` **skeleton** already lives alongside it — same protocol, same `Message` wire schema — with the exact integration points marked `TODO(kickoff)`. Swapping it in touches **no agent logic**. See `band_wiring_prompt.md` for the full build prompt.
-
-## Real Band setup (June 12 kickoff)
-
-```bash
-pip install -r requirements.txt          # pymongo, python-dotenv, pyyaml
-# then, per the Band docs (shared at kickoff), add the SDK:
-#   uv add "band-sdk[anthropic]"         # or [claude-sdk] / [google-adk]
-
-cp .env.example .env                     # fill MONGODB_URI, THENVOI_*, BAND_ROOM_ID, LLM key
-cp agent_config.yaml.example agent_config.yaml   # paste the 4 Band agent keys + UUIDs
-```
-
-1. **Atlas data** — `python seed_atlas.py` loads the same portfolio + market shape into MongoDB Atlas (`portfolio` and `market` collections; DOGE deliberately absent so the "no data" abstention still reproduces). The DataAgent then reads it via the MongoDB MCP server.
-2. **Band room + agents** — create a free account and four Remote Agents (Data, Risk, Calibration, Reviewer) at [app.band.ai](https://app.band.ai); put their keys/UUIDs in `agent_config.yaml`.
-3. **Wire `RealBandBus`** — implement the three `TODO(kickoff)` methods in `band_bus.py` against the room's message log.
-4. **Verify** — `python test_real_band.py` runs one live review through the room (it **skips cleanly when credentials are absent**, so CI stays green until then).
-
-Both `.env` and `agent_config.yaml` are gitignored — secrets never land in the repo.
+The agents depend only on the `Bus` protocol in `band_bus.py`. `LocalBandBus` is an in-memory stand-in for a Band room so the whole workflow runs offline today. At the June 12 kickoff, swap in a thin `RealBandBus` adapter over the Band SDK **without touching any agent logic**. See `band_wiring_prompt.md` for the exact build prompt.
 
 ## Files
 
+**Offline scaffold (runs now, no creds — proves the logic):**
+
 - `risk_core.py` — deterministic risk + calibration math (pure functions)
-- `band_bus.py` — the collaboration layer (`Bus` protocol + `LocalBandBus` + `RealBandBus` skeleton)
-- `agents.py` — the four agents
-- `seed_data.py` — sample portfolio + market snapshot (offline)
-- `seed_atlas.py` — load that same shape into MongoDB Atlas (real build)
+- `band_bus.py` — the collaboration layer (`Bus` protocol + `LocalBandBus`)
+- `agents.py` — the four agents (mock-bus version)
+- `seed_data.py` — sample portfolio + market snapshot
 - `run_demo.py` — orchestrates the four scenarios
 - `test_workflow.py` — tests (math + workflow), 16/16
-- `test_real_band.py` — guarded live smoke test (skips without Band creds)
-- `.env.example`, `agent_config.yaml.example` — config templates for the real build
-- `requirements.txt` — prep dependencies
-- `architecture_band.png` — the diagram above
-- `band_wiring_prompt.md`, `BUILD_AND_PUSH_PROMPT.md` — prompts to wire the real Band SDK at kickoff
 
-Built by **Ruiyang Zhang** — CFA, ASA. github.com/ryonzhang · ruiyang.co
+**Going live on Band (run on your machine — see `SETUP_BAND.md`):**
 
-<!-- end of README -->
+- `risk_tools.py` — the deterministic c

@@ -3,7 +3,7 @@ risk_core.py — deterministic risk + calibration math.
 
 This is the honest, testable core. The LLM never invents these numbers;
 the agents call these functions and narrate the results. Reused from
-Calibrated Conviction / Calibrated Copilot (CFA/ASA methodology).
+Calibrated Conviction / Calibrated Copilot.
 
 No network, no LLM, no randomness. Pure functions.
 """
